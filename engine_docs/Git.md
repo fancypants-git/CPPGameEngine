@@ -1,4 +1,4 @@
-# [Github Repository](https://github.com/fancypants-git/CPPGameEngine)
+# [CPPGameEngine](https://github.com/fancypants-git/CPPGameEngine)
 This repository is the main repository used for this project
 ## Branches
 Upon creating a new branch, deleting an old one, or changing the name of an existing branch, this document must be properly updated and pushed to the [[#[Master](https //github.com/fancypants-git/CPPGameEngine/tree/master)|Master]] branch to account for the new changes.
