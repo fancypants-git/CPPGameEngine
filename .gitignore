@@ -1,0 +1,9 @@
+# obsidian exclude
+# engine_docs/*
+engine_docs/.obsidian/*
+
+# c++ excludes
+main
+exe
+app
+program
