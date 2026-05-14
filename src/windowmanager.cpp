@@ -14,7 +14,7 @@ namespace engine {
     {
         if (!Application::getRenderPipelineManager().initializeGLFW())
         {
-            std::cout << "tried creating window, but GLFW is not initialized yet" << std::endl;
+            std::cout << "tried to create window, but GLFW failed to initialize" << std::endl;
             return nullptr;
         }
 
@@ -22,7 +22,20 @@ namespace engine {
         if (window != nullptr)
             return window;
 
-        window = glfwCreateWindow(settings.width, settings.height, settings.title, settings.monitor, settings.share);
+        GLFWwindow *share = NULL;
+        if (settings.share)
+        {
+            share = getWindow(settings.share);
+            _sharedContexts[identifier] = settings.share;
+        }
+        else
+        {
+            // create a new GpuResourceManager if the context is not shared
+            GpuResourceManager gpuRM { GpuResourceManager() };
+            _resourceManagers[identifier] = gpuRM;
+        }
+
+        window = glfwCreateWindow(settings.width, settings.height, settings.title, settings.monitor, share);
         glfwSetFramebufferSizeCallback(window, defaultFramebufferSizeCallback);
         glfwSetWindowCloseCallback(window, windowCloseCallback);
 
@@ -34,6 +47,30 @@ namespace engine {
         _closedWindows.push_back(window);
     }
 
+    void WindowManager::updateWindows()
+    {
+        if (!Application::getRenderPipelineManager().getIsGLFWInitialized())
+            return;
+
+        if (_windows.empty())
+            return;
+        
+        glfwPollEvents();
+    }
+
+    void WindowManager::renderWindows()
+    {
+        if (!Application::getRenderPipelineManager().getIsGLFWInitialized())
+            return;
+        
+        for (WindowIdentifier identifier : _windowDrawRequests)
+        {
+            GLFWwindow *window = getWindow(identifier);
+            glfwSwapBuffers(window);
+        }
+    }
+
+    // default glfw window callbacks
     void defaultFramebufferSizeCallback(GLFWwindow *window, int width, int height)
     {
         glfwSetWindowSize(window, width, height);

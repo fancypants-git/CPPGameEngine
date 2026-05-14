@@ -1,7 +1,5 @@
 #include <application.h>
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace engine {
     bool Application::_isRunning = false;
@@ -23,8 +21,7 @@ namespace engine {
     {
         if (_isDisposed) return;
 
-        if (_isGLFWInitialized)
-            glfwTerminate();
+        _renderPipelineManager.dispose();
 
         _isDisposed = true;
     }

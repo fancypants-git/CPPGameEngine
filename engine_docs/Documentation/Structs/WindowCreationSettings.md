@@ -1,5 +1,10 @@
 a struct defining the settings used for creating and initializing a new window
 # properties
+- [[#width]]
+- [[#height]]
+- [[#title]]
+- [[#monitor]]
+- [[#share]]
 ### width
 the width of the new window (excluding window details)
 #### type
@@ -27,14 +32,11 @@ NULL
 #### see also
 [GLFWmonitor](https://www.glfw.org/docs/latest/group__monitor.html#ga8d9efd1cde9426692c73fe40437d0ae3)
 ### share
-the window whose context to share resources with, or NULL to not share resources
+the window whose context to share resources with, set to a non-existing value (e.g. -1 casted to [[WindowIdentifier]]) to not share resources
 #### type
-GLFWwindow
+[[WindowIdentifier]]
 #### default value
-NULL
-#### see also
-[GLFWwindow](https://www.glfw.org/docs/latest/group__window.html#ga3c96d80d363e67d13a41b5d1821f3242)
-
+-1
 # see also
 [GLFWwindow](https://www.glfw.org/docs/latest/group__window.html#ga3c96d80d363e67d13a41b5d1821f3242),
 [glfwCreateWindow](https://www.glfw.org/docs/latest/group__window.html#ga3555a418df92ad53f917597fe2f64aeb),

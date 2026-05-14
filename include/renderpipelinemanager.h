@@ -7,12 +7,15 @@ namespace engine {
         private:
             bool _isGLFWInitialized { false };
             bool _isGladInitialized { false };
+            bool _isDisposed { false };
         
         public:
             bool initializeGLFW();
             bool initializeGlad();
             bool getIsGLFWInitialized();
             bool getIsGladInitialized();
+
+            void dispose();
     };
 }
 

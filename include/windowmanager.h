@@ -3,6 +3,7 @@
 
 #include <bits/stdc++.h>
 #include <GLFW/glfw3.h>
+#include <gpuresourcemanager.h>
 
 namespace engine {
     enum WindowIdentifier {
@@ -20,19 +21,24 @@ namespace engine {
         int height { 600 };
         char *title { "OpenGL Window" };
         GLFWmonitor *monitor { NULL };
-        GLFWwindow *share { NULL };
+        WindowIdentifier share { (WindowIdentifier) -1 };
     };
 
     class WindowManager
     {
         private:
             std::map<WindowIdentifier, GLFWwindow *> _windows {};
+            std::map<WindowIdentifier, WindowIdentifier> _sharedContexts {};
+            std::map<WindowIdentifier, GpuResourceManager> _resourceManagers {};
             std::vector<GLFWwindow *> _closedWindows {};
+            std::vector<WindowIdentifier> _windowDrawRequests {};
 
         public:
             GLFWwindow *getWindow(WindowIdentifier);
+            GpuResourceManager &getGpuResourceManager(WindowIdentifier);
             GLFWwindow *createWindow(WindowIdentifier, WindowCreationSettings);
             void registerWindowClose(GLFWwindow *);
+            void registerDrawRequest(WindowIdentifier);
             void updateWindows();
             void renderWindows();
     };
